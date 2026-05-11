@@ -55,6 +55,54 @@ jobs:
             --noinclude-qt-plugins=sensible,bluetooth,qml,webengine,spatialaudio \
             --output-dir=dist \
             main.py
+          
+
+      # [DÀNH RIÊNG CHO LINUX]: Đóng gói thành AppImage
+      - name: Create AppImage (Linux only)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          # 1. Tải công cụ appimagetool chính thức
+          wget -O appimagetool "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
+          chmod +x appimagetool
+          
+          # 2. Tạo cấu trúc thư mục AppDir chuẩn
+          mkdir -p AppDir/usr/bin
+          
+          # 3. Copy file thực thi của Nuitka vào AppDir
+          cp dist/main AppDir/usr/bin/main
+          chmod +x AppDir/usr/bin/main
+          
+          # 4. Tạo file cấu hình .desktop (để HĐH nhận diện tên, icon)
+          cat <<EOF > AppDir/AI_Project.desktop
+          [Desktop Entry]
+          Type=Application
+          Name=AI Project
+          Exec=main
+          Icon=app_icon
+          Categories=Education;Science;
+          Terminal=false
+          EOF
+          
+          # 5. Tải một Icon mặc định (Bạn có thể đổi link này thành logo của bạn sau)
+          wget -O AppDir/app_icon.png "https://cdn-icons-png.flaticon.com/512/2111/2111432.png"
+          
+          # 6. Tạo script AppRun (Trái tim của AppImage, chỉ đường đến file chạy)
+          cat <<EOF > AppDir/AppRun
+          #!/bin/sh
+          HERE="\$(dirname "\$(readlink -f "\${0}")")"
+          exec "\${HERE}/usr/bin/main" "\$@"
+          EOF
+          chmod +x AppDir/AppRun
+          
+          # 7. Đóng gói thư mục AppDir thành file .AppImage
+          ./appimagetool --appimage-extract-and-run AppDir AI_Project-Linux-x86_64.AppImage
+          
+          # 8. Di chuyển file AppImage vào thư mục dist để Upload
+          mv AI_Project-Linux-x86_64.AppImage dist/
+          
+          # Dọn dẹp file nhị phân thô cũ để tránh nhầm lẫn
+          rm dist/main
 
       # [DÀNH RIÊNG CHO MACOS]: Đóng gói bằng PyInstaller để tránh lỗi PyQt6
       - name: Build with PyInstaller (macOS Fallback)
