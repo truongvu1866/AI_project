@@ -2,12 +2,11 @@
 #  game.py – Logic cốt lõi: bàn cờ, kiểm tra thắng, trạng thái
 # ============================================================
 from __future__ import annotations
-import copy
 from typing import Optional, List, Tuple
+
 from constants import (
     EMPTY, PLAYER_1, PLAYER_2,
     MIN_BOARD, MAX_BOARD,
-    DEFAULT_WIN_LENGTH, get_win_length_options,
 )
 
 

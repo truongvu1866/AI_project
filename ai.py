@@ -2,13 +2,13 @@
 #  ai.py – AI Minimax + Alpha-Beta Pruning + Heuristic
 # ============================================================
 from __future__ import annotations
+
 import math
-import time
 import threading
 from typing import Optional, Tuple, Dict, List, Callable
-from constants import EMPTY, PLAYER_1, PLAYER_2, DIFF_EASY, DIFF_MEDIUM, DIFF_HARD, DIFF_EXPERT, get_depth
-from game import Board
 
+from constants import EMPTY, PLAYER_1, PLAYER_2, get_depth
+from game import Board
 
 # ─────────────────────────────────────────────────────────────
 #  Hàm đánh giá Heuristic

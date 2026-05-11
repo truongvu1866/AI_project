@@ -194,7 +194,6 @@ class PlayerCard(QFrame):
                     border: 2px solid {color};
                     border-radius: 10px;
                     padding: 6px;
-                    box-shadow: 0 0 8px {color};
                 }}
             """)
         else:

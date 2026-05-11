@@ -2,19 +2,17 @@
 #  ui_board.py – Widget vẽ bàn cờ + heatmap trọng số AI
 # ============================================================
 from __future__ import annotations
-import math
-from typing import Dict, List, Optional, Tuple, Callable
 
-from PyQt6.QtWidgets import QWidget, QSizePolicy
-from PyQt6.QtCore import Qt, QRect, QPoint, pyqtSignal, QSize
+from typing import Dict, List, Optional, Tuple
+
+from PyQt6.QtCore import Qt, QRect, QPoint, pyqtSignal
 from PyQt6.QtGui import (
-    QPainter, QPen, QBrush, QColor, QFont, QFontMetrics,
-    QLinearGradient, QRadialGradient, QPainterPath,
+    QPainter, QPen, QBrush, QColor, QFont,
 )
+from PyQt6.QtWidgets import QWidget, QSizePolicy
 
 from constants import (
-    EMPTY, PLAYER_1, PLAYER_2,
-    COLOR_BG2, COLOR_BORDER, COLOR_EMPTY, COLOR_HOVER,
+    EMPTY, PLAYER_1, COLOR_BG2, COLOR_BORDER, COLOR_HOVER,
     COLOR_PLAYER1, COLOR_PLAYER2, COLOR_WIN_CELL,
     COLOR_ACCENT1,
 )

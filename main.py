@@ -9,17 +9,13 @@ import os
 sys.path.insert(0, os.path.dirname(__file__))
 
 from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import Qt, QCoreApplication
-from PyQt6.QtGui import QIcon, QPalette, QColor
+from PyQt6.QtGui import QPalette, QColor
 
 from ui_main import MainWindow
 from constants import COLOR_BG
 
 
 def main():
-    # Bật DPI cao
-    QCoreApplication.setAttribute(Qt.ApplicationAttribute.AA_UseHighDpiPixmaps)
-
     app = QApplication(sys.argv)
     app.setApplicationName("TicTacToe AI")
     app.setApplicationVersion("1.0.0")
