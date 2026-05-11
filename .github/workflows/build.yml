@@ -1,0 +1,62 @@
+name: Build Desktop Apps (Nuitka)
+
+# Kích hoạt khi có code đẩy lên nhánh main hoặc bấm chạy bằng tay
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    # Ma trận giúp chạy đồng thời trên 3 hệ điều hành
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Cài đặt thư viện C-headers cho Ubuntu (Tránh lỗi FATAL của Nuitka)
+      - name: Install Linux System Dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y python3-dev
+
+      # Cài đặt uv siêu nhanh bằng action chính thức của Astral
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      # Thiết lập Python 3.13
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      # Dùng uv để cài đặt các thư viện từ requirements.txt và Nuitka
+      - name: Install Dependencies
+        run: |
+          uv venv
+          uv pip install -r requirements.txt
+          uv pip install nuitka zstandard
+
+      # Đóng gói bằng Nuitka (Sử dụng uv run để chạy trong môi trường ảo)
+      - name: Build with Nuitka
+        run: >
+          uv run python -m nuitka 
+          --standalone 
+          --onefile 
+          --enable-plugin=pyqt6 
+          --noinclude-qt-plugins=sensible,bluetooth,qml,webengine,spatialaudio 
+          --output-dir=dist 
+          main.py
+
+      # Tải file thực thi (.exe, .bin) lên GitHub để bạn tải về
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AI_Project-${{ matrix.os }}
+          path: dist/*
