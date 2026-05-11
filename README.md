@@ -4,6 +4,19 @@
 
 ---
 
+## 📦 Sử dụng bản Release (Chạy ngay không cần cài đặt)
+
+Nếu bạn chỉ muốn trải nghiệm game mà không cần cài đặt môi trường Python, hãy tải các phiên bản đã được đóng gói sẵn tại trang **Releases** của kho lưu trữ này:
+
+- **🪟 Windows:** 1. Tải file zip dành cho Windows và giải nén.
+  2. Nhấp đúp vào file `main.exe` (hoặc file `.exe` tương ứng) để mở game. 
+  *(Lưu ý: Nếu Windows SmartScreen hiện thông báo bảo vệ màu xanh, hãy nhấn **More info** > **Run anyway**).*
+- **🐧 Linux:** 1. Tải file `.AppImage` về máy.
+  2. Cấp quyền thực thi: Nhấp chuột phải vào file > **Properties** > tab **Permissions** > Tích chọn **Allow executing file as program**. (Hoặc mở Terminal gõ `chmod +x ten_file.AppImage`).
+  3. Nhấp đúp vào file để mở ứng dụng.
+- **🍏 macOS:** 1. Tải file nén dành cho macOS và giải nén.
+  2. Lần đầu tiên chạy, nếu hệ thống Apple Gatekeeper chặn ứng dụng, hãy nhấp **Chuột phải** vào file ứng dụng và chọn **Open** (Mở).
+
 ## 📋 Yêu cầu hệ thống
 
 - **Python** ≥ 3.9
